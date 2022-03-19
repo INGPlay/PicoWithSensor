@@ -4,7 +4,7 @@
 #include "hardware/timer.h"
 #include "pico/platform.h"
 
-void initGPIO(uint gpio, bool out);
+void initGPIO(uint gpio, bool dirOut, bool putOut);
 
 int main() {
     const uint trigPin = 27;
@@ -15,12 +15,9 @@ int main() {
 
     stdio_init_all();
 
-	gpio_init(trigPin);
-	gpio_set_dir(trigPin, GPIO_OUT);
-	gpio_put(trigPin, GPIO_IN);
-
-    initGPIO(echoPin, GPIO_IN);
-    initGPIO(led, GPIO_OUT);
+	initGPIO(trigPin, GPIO_OUT, GPIO_IN);
+    initGPIO(echoPin, GPIO_IN, GPIO_IN);
+    initGPIO(led, GPIO_OUT, GPIO_OUT);
 
     absolute_time_t startTime;
     absolute_time_t endTime;
@@ -71,10 +68,10 @@ int main() {
     return 0;
 }
 
-void initGPIO(uint gpio, bool out) {
+void initGPIO(uint gpio, bool dirOut, bool putOut) {
 	gpio_init(gpio);
 
-	gpio_set_dir(gpio, out);
+	gpio_set_dir(gpio, dirOut);
 
-	gpio_put(gpio, out);
+	gpio_put(gpio, putOut);
 }
