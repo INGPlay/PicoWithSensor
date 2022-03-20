@@ -6,8 +6,6 @@ void initGPIO(uint gpio, bool dirOut, bool putOut);
 void initADC(uint gpio, uint adc);
 
 int main() {
-
-
     const uint a0 = 26;
     const uint led = 25;
 
@@ -17,14 +15,12 @@ int main() {
     initGPIO(led, GPIO_OUT, GPIO_OUT);
     initADC(26, 0);
 
-    const uint delay = 1000; // 1s delay
-    const float conversion = 3.3f / (1 << 12);
+    const uint delay = 100; // 1s delay
 
-    // result : 0x000 ~ 0xFFF
     uint16_t result;
     while(true) {
         result = adc_read();
-        printf("Raw value: %fV\n", result * conversion);
+        printf("%d \n", result);
         sleep_ms(delay);
     }
 
